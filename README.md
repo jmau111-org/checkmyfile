@@ -8,7 +8,6 @@ Inspired by [checklinux](https://github.com/jmau111/checklinux)
 
 ```
 git clone https://github.com/jmau111/checkmyfile
-sudo -s
 cd checkmyfile
 bash checklinux /path/to/myfile > ~/results.log
 less ~/results.log

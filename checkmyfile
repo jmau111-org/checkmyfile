@@ -1,12 +1,6 @@
 #!/bin/bash
 # credits: jmau111
 
-if [ $UID -ne 0 ]
-then
-	echo -e "\e[1;31m Ride as root, please...\033[0m"
-	exit 1
-fi
-
 if [[ $# -eq 0 ]] ; then
 	echo -e "\e[1;31mI need one argument, at least!\033[0m"
     exit 1
