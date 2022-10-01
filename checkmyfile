@@ -1,0 +1,66 @@
+#!/bin/bash
+# credits: jmau111
+
+if [ $UID -ne 0 ]
+then
+	echo -e "\e[1;31m Ride as root, please...\033[0m"
+	exit 1
+fi
+
+if [[ $# -eq 0 ]] ; then
+	echo -e "\e[1;31mI need one argument, at least!\033[0m"
+    exit 1
+fi
+
+if [[ ! -f "$1" ]] ; then
+	echo -e "\e[1;31mI need an existing file, cause I check files...\033[0m"
+	exit 1
+fi
+
+function print_info() {
+	echo " "
+	echo "-------"
+	echo -e "\033[0;93m$1\033[0m"
+}
+
+echo "starting analysis..."
+
+print_info "I'm identifying the file type"
+file -i $1
+
+print_info "Let's see EXIF data:"
+exiftool $1
+
+print_info "I'm looking for more info:"
+for info in $(stat -L -t $1)
+do
+	echo $info
+done
+
+print_info "I'm extracting strings:"
+strings -d $1
+
+print_info "I'm running Hex analysis:"
+xxd $1 | head
+
+tmp="/tmp/objdump.txt"
+touch "$tmp"
+
+objdump -x $1 2> $tmp
+cat=$(cat $tmp)
+
+if echo $cat | grep -iq "format not recognized"; then
+	echo -e "\033[0;96mskipping binary analysis, as it does not seem to be a binary exec.\033[0m"
+else
+	print_info "I'm dumping objects:"
+	objdump -d $1 | head
+
+	print_info "I'm reading ELF objects"
+	readelf -h $1
+
+	print_info "Printing shared objects:"
+	ldd -v $1
+fi
+
+rm $tmp
+echo -e "\033[0;92mdone.\033[0m"
