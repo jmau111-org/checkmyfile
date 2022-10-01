@@ -1,7 +1,8 @@
 # checkmyfile
 
-A simple Bash script to inspect a file using known Linux commands [checklinux](https://github.com/jmau111/checklinux)
+A simple Bash script to inspect a file using known Linux commands.
 
+Inspired by [checklinux](https://github.com/jmau111/checklinux)
 
 ## How to use
 
