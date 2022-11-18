@@ -2,7 +2,7 @@
 
 A simple Bash script to inspect a file using known Linux commands.
 
-Inspired by [checklinux](https://github.com/jmau111/checklinux)
+Inspired by [checklinux](https://github.com/jmau111-org/checklinux)
 
 ## How to use
 
